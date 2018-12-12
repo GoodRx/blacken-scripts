@@ -7,10 +7,10 @@ Requires hub and ghi: brew install hub ghi
 Login with hub: hub ci-status
 Login with ghi: ghi config --auth [username]
 
-Usage: $0 REPO BASE_BRANCH
+Usage: $0 REPO BASE_BRANCH_OR_COMMIT
 
 REPO is the GH org and repo, e.g. GoodRx/test-repo
-BASE_BRANCH is the branch PRs should not conflict with, e.g. 'master' or 'develop'"
+BASE_BRANCH_OR_COMMIT is the branch (or commit) PRs should not conflict with, e.g. 'master' or 'develop'"
 
 if [ "$#" -ne 2 ]; then
     echo "${USAGE}"
@@ -18,7 +18,7 @@ if [ "$#" -ne 2 ]; then
 fi
 
 REPO=$1
-BASE_BRANCH="origin/${2}"
+BASE="${2}"
 
 # First ensure dependencies are installed
 hash hub 2>/dev/null || (echo "Install hub: brew install hub" >&2; exit 1)
@@ -39,7 +39,7 @@ for pr in $(hub pr list --format='%I%n'); do
 
    # Manage the "pre-black-conflict" label by checking whether the PR can be
    # merged without conflicts
-   if ! git merge -q --no-edit "${BASE_BRANCH}"; then
+   if ! git merge -q --no-edit "${BASE}"; then
       ghi label "${pr}" --add "${LABEL}"
       git merge --abort
    else
