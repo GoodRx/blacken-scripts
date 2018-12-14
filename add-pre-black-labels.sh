@@ -31,7 +31,7 @@ hub clone "${REPO}" "${REPO_DIR}" && cd "${REPO_DIR}"
 
 # Label to track PRs that need updating before we can apply Black
 LABEL="pre-black-conflict"
-ghi label "${LABEL}" --color black
+ghi label "${LABEL}" --color gray
 
 for pr in $(hub pr list --format='%I%n'); do
    PR_BRANCH="pr/${pr}"
