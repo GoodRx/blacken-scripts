@@ -50,7 +50,7 @@ To update your pull request manually, follow these steps:
 
 1. Checkout your branch.
 
-2. Merge the latest pre-Black commit into your branch, and resolve any conflicts, if necessary:
+2. Merge the last pre-Black commit into your branch, and resolve any conflicts, if necessary:
 
    \`\`\`sh
    git merge ${PRE_BLACK_COMMIT}
